@@ -1,16 +1,19 @@
 import time
 
-import pygame, random
+import pygame, pygame_functions as pf, bfs
 
 pygame.init()
 clock = pygame.time.Clock()
 
-edge = 401
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
+
 rect_size = 10
+rect_number = 40
+edge = rect_size * rect_number
 
 win = pygame.display.set_mode((edge, edge))
 
@@ -18,47 +21,58 @@ game = True
 
 l = []
 
-start, end = (0, 0), (0, 0)
+start = (0, 0)
+end = (0, 0)
+
+
+# calculatin rigth x and y for single rect draw
+def rect_pos(x_y):
+    return (rect_size * (x_y[0] // rect_size), rect_size * (x_y[1] // rect_size))
+
 
 while game:
     win.fill(WHITE)
-    clock.tick(120)
+    clock.tick(60)
+    mouse_pos = pygame.mouse.get_pos()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pos())
-            l.append(pygame.mouse.get_pos())
+
+        if pygame.mouse.get_pressed()[0]:
+            if rect_pos(mouse_pos) not in l:
+                l.append(rect_pos(mouse_pos))
+        if pygame.mouse.get_pressed()[2]:
+            if rect_pos(mouse_pos) in l:
+                l.remove(rect_pos(mouse_pos))
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_0:
-                print(pygame.mouse.get_pos())
+                print(mouse_pos, bfs.nodes[mouse_pos[0],mouse_pos[1]])
             if event.key == pygame.K_1:
-                start = pygame.mouse.get_pos()
+                start = rect_pos(mouse_pos)
             if event.key == pygame.K_2:
-                end = pygame.mouse.get_pos()
+                end = rect_pos(mouse_pos)
             if event.key == pygame.K_s:
                 print(start, end)
+            #if event.key == pygame.K_c:
+                #bfs.bfs_path
+
     for i in range(0, edge, rect_size):
         pygame.draw.line(win, BLACK, (0, i), (edge, i))
         pygame.draw.line(win, BLACK, (i, 0), (i, edge))
-    if pygame.mouse.get_pressed():
-        l.append(pygame.mouse.get_pos())
+
     # time.sleep(0.4)
 
-    # pygame.draw.rect(win,WHITE,(random.randrange(1,edge,10),random.randrange(1,edge,10),9,9))
     for i in l:
-        pygame.draw.rect(win, BLACK, (
-                rect_size * (i[0] // rect_size) + 1, rect_size * (i[1] // rect_size) + 1, rect_size - 1, rect_size - 1))
+        pf.draw_rect(win, BLACK, i, rect_size)
 
-    if start != (0,0):
-        pygame.draw.rect(win, RED, (
-                rect_size * (start[0] // rect_size) + 1, rect_size * (start[1] // rect_size) + 1, rect_size - 1, rect_size - 1))
-    if end != (0,0):
-        pygame.draw.rect(win, BLUE, (
-                rect_size * (end[0] // rect_size) + 1, rect_size * (end[1] // rect_size) + 1, rect_size - 1, rect_size - 1))
+    if start != (0, 0):
+        pf.draw_rect(win, RED, start, rect_size)
+    if start != (0, 0):
+        pf.draw_rect(win, BLUE, end, rect_size)
 
+    for i in bfs.w:
+        pf.draw_rect(win, GREEN, (bfs.nodes_pos[i][0]*10,bfs.nodes_pos[i][1]*10), rect_size)
 
-    # pygame.draw.rect(win, WHITE, (10 * (pygame.mouse.get_pos()[0] // 10) + 1, 10 * (pygame.mouse.get_pos()[1] // 10) + 1, 9, 9))
-    #l.append(pygame.mouse.get_pos())
     pygame.display.update()
