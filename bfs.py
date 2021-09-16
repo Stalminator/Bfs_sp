@@ -27,6 +27,8 @@ def create_graph(size):
             print(j,end=' ')
         print()
     '''
+    #for i,j in graph.items():
+    #    print(i,j)
     return graph,nodes_pos,nodes
 
 def bfs_path(graph,start,end):
@@ -45,15 +47,21 @@ def bfs_path(graph,start,end):
                     return path
         explored.append(node)
 
-c,nodes_pos,nodes = create_graph(40)
-w = bfs_path(c,1,399)
+#c,nodes_pos,nodes = create_graph(40)
+#w = bfs_path(c,1,399)
 
-#print(w)
-#print(nodes[62])
-#for i,j in c.items():
-    #print(i,j)
-x=[]
-print(w)
-for i in w:
-    x.append(nodes_pos[i])
-print(x)
+a,b,c = create_graph(40)
+print(a)
+
+##del a[2]
+##w = []
+##for i in a.values():
+  ##  if 2 in i:
+    ##    i.remove(2)
+
+##path = bfs_path(a,1,15)
+##print(path)
+##for i in path:
+  ##  w.append((b[i][1]*10,b[i][0]*10))
+#print(a)
+print(b)

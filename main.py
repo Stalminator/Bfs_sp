@@ -20,6 +20,7 @@ win = pygame.display.set_mode((edge, edge))
 game = True
 
 l = []
+w = []
 
 start = (0, 0)
 end = (0, 0)
@@ -48,7 +49,13 @@ while game:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_0:
-                print(mouse_pos, bfs.nodes[mouse_pos[0],mouse_pos[1]])
+                w.clear()
+                path = bfs.bfs_path(bfs.a, bfs.c[start[1]//10][start[0]//10], bfs.c[end[1]//10][end[0]//10])
+
+                for i in path:
+                    w.append((bfs.b[i][1] * 10, bfs.b[i][0] * 10))
+            if event.key == pygame.K_w:
+                w.clear()
             if event.key == pygame.K_1:
                 start = rect_pos(mouse_pos)
             if event.key == pygame.K_2:
@@ -72,7 +79,15 @@ while game:
     if start != (0, 0):
         pf.draw_rect(win, BLUE, end, rect_size)
 
-    for i in bfs.w:
-        pf.draw_rect(win, GREEN, (bfs.nodes_pos[i][0]*10,bfs.nodes_pos[i][1]*10), rect_size)
+    for i in l:
+        if bfs.c[i[1]//10][i[0]//10] in bfs.a:
+            del bfs.a[bfs.c[i[1]//10][i[0]//10]]
+        for j in bfs.a.values():
+            if bfs.c[i[1]//10][i[0]//10] in j:
+                j.remove(bfs.c[i[1]//10][i[0]//10])
+
+
+    for i in w:
+        pf.draw_rect(win, GREEN, (i[0],i[1]), rect_size)
 
     pygame.display.update()
