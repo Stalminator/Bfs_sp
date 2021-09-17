@@ -19,17 +19,17 @@ win = pygame.display.set_mode((edge, edge))
 
 game = True
 
-l = []
-w = []
+black_rects = []
+s_path = []
 
 start = (0, 0)
 end = (0, 0)
 
+graph,nodes_pos,nodes = bfs.create_graph(rect_number)
 
 # calculatin rigth x and y for single rect draw
 def rect_pos(x_y):
     return (rect_size * (x_y[0] // rect_size), rect_size * (x_y[1] // rect_size))
-
 
 while game:
     win.fill(WHITE)
@@ -40,54 +40,32 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
-        if pygame.mouse.get_pressed()[0]:
-            if rect_pos(mouse_pos) not in l:
-                l.append(rect_pos(mouse_pos))
-        if pygame.mouse.get_pressed()[2]:
-            if rect_pos(mouse_pos) in l:
-                l.remove(rect_pos(mouse_pos))
+        pf.mouse_buttons(mouse_pos, rect_pos, black_rects)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_0:
-                w.clear()
-                path = bfs.bfs_path(bfs.a, bfs.c[start[1]//10][start[0]//10], bfs.c[end[1]//10][end[0]//10])
+
+                s_path.clear()
+
+                path = bfs.bfs_path(graph, nodes[start[1]//10][start[0]//10], nodes[end[1]//10][end[0]//10])
 
                 for i in path:
-                    w.append((bfs.b[i][1] * 10, bfs.b[i][0] * 10))
+                    s_path.append((nodes_pos[i][1] * 10, nodes_pos[i][0] * 10))
+                s_path = s_path[1:-1]
             if event.key == pygame.K_w:
-                w.clear()
+                s_path.clear()
             if event.key == pygame.K_1:
                 start = rect_pos(mouse_pos)
             if event.key == pygame.K_2:
                 end = rect_pos(mouse_pos)
             if event.key == pygame.K_s:
-                print(start, end)
-            #if event.key == pygame.K_c:
-                #bfs.bfs_path
+                s_path.clear()
 
-    for i in range(0, edge, rect_size):
-        pygame.draw.line(win, BLACK, (0, i), (edge, i))
-        pygame.draw.line(win, BLACK, (i, 0), (i, edge))
+    pf.draw_lines(win, BLACK, edge, rect_size)
+    pf.draw_rect(win, GREEN, rect_size, s_path)
+    pf.draw_rect(win, BLACK, rect_size, black_rects)
+    pf.draw_start_end(start,end,RED,BLUE,rect_size,win)
 
-    # time.sleep(0.4)
-
-    for i in l:
-        pf.draw_rect(win, BLACK, i, rect_size)
-
-    if start != (0, 0):
-        pf.draw_rect(win, RED, start, rect_size)
-    if start != (0, 0):
-        pf.draw_rect(win, BLUE, end, rect_size)
-
-    for i in l:
-        if bfs.c[i[1]//10][i[0]//10] in bfs.a:
-            del bfs.a[bfs.c[i[1]//10][i[0]//10]]
-        for j in bfs.a.values():
-            if bfs.c[i[1]//10][i[0]//10] in j:
-                j.remove(bfs.c[i[1]//10][i[0]//10])
-
-
-    for i in w:
-        pf.draw_rect(win, GREEN, (i[0],i[1]), rect_size)
+    bfs.graph_update(black_rects, graph, nodes)
 
     pygame.display.update()

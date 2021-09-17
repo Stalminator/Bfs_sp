@@ -21,14 +21,6 @@ def create_graph(size):
             if i - 1 >= 0: graph[nodes[i][j]].append(nodes[i-1][j])
             if i + 1 < size: graph[nodes[i][j]].append(nodes[i+1][j])
 
-    '''
-    for i in nodes:
-        for j in i:
-            print(j,end=' ')
-        print()
-    '''
-    #for i,j in graph.items():
-    #    print(i,j)
     return graph,nodes_pos,nodes
 
 def bfs_path(graph,start,end):
@@ -47,21 +39,10 @@ def bfs_path(graph,start,end):
                     return path
         explored.append(node)
 
-#c,nodes_pos,nodes = create_graph(40)
-#w = bfs_path(c,1,399)
-
-a,b,c = create_graph(40)
-print(a)
-
-##del a[2]
-##w = []
-##for i in a.values():
-  ##  if 2 in i:
-    ##    i.remove(2)
-
-##path = bfs_path(a,1,15)
-##print(path)
-##for i in path:
-  ##  w.append((b[i][1]*10,b[i][0]*10))
-#print(a)
-print(b)
+def graph_update(rects_list,graph,nodes):
+    for i in rects_list:
+        if nodes[i[1]//10][i[0]//10] in graph:
+            del graph[nodes[i[1]//10][i[0]//10]]
+        for j in graph.values():
+            if nodes[i[1]//10][i[0]//10] in j:
+                j.remove(nodes[i[1]//10][i[0]//10])
