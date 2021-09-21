@@ -1,5 +1,7 @@
 import pygame, bfs
 
+clock = pygame.time.Clock()
+
 rect_size = 10
 rect_number = 40
 edge = rect_size * rect_number
