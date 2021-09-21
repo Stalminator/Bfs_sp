@@ -18,7 +18,7 @@ def mouse_buttons(mouse_pos,rect_pos,black_rects):
             black_rects.remove(rect_pos(mouse_pos))
 
 def draw_start_end(start,end,RED,BLUE,rect_size,win):
-    if start != (0, 0):
+    if start != (0, 1):
         pygame.draw.rect(win, RED, (start[0] + 1, start[1] + 1, rect_size - 1, rect_size - 1))
-    if end != (0, 0):
+    if end != (0, 1):
         pygame.draw.rect(win, BLUE, (end[0] + 1, end[1] + 1, rect_size - 1, rect_size - 1))
