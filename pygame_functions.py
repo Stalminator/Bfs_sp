@@ -1,3 +1,5 @@
+import time
+
 import pygame, settings as s, bfs
 
 
@@ -50,7 +52,24 @@ def events(mouse_pos):
             if event.key == pygame.K_2:
                 s.end = s.rect_pos(mouse_pos)
             if event.key == pygame.K_s:
-                s.s_path.clear()
+                draw_finding()
+
+def draw_finding():
+    for i in s.paths:
+        tmp = []
+        for j in i:
+            tmp.append((s.graph[1][j][1] * 10, s.graph[1][j][0] * 10))
+
+        draw_lines()
+
+        draw_rect(s.BLACK, s.black_rects)
+        draw_start_end()
+        draw_rect(s.TMP, tmp[1:-1])
+        pygame.display.update()
+        time.sleep(0.01)
+        draw_rect(s.WHITE, tmp[1:-1])
+        pygame.display.update()
+
 
 
 def draw():

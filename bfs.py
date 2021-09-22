@@ -27,12 +27,14 @@ def create_graph():
 
 
 def bfs_path():
+    s.paths.clear()
     queue = []
     queue.append([s.node_at_xy(s.start)])
     explored = []
     while queue:
         tmp = queue.pop(0)
         node = tmp[-1]
+        s.paths.append(tmp)
         if node not in explored:
             for i in s.graph[0][node]:
                 path = list(tmp)

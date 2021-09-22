@@ -16,3 +16,4 @@ while s.game:
     bfs.graph_update()
 
     pygame.display.update()
+

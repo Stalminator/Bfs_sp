@@ -12,6 +12,7 @@ game = True
 
 black_rects = []
 s_path = []
+paths = []
 
 start = (0, 1)
 end = (0, 1)
@@ -23,6 +24,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
+TMP = (120,120,120)
 
 
 def rect_pos(x_y):
