@@ -2,7 +2,7 @@ import pygame, bfs
 
 clock = pygame.time.Clock()
 
-rect_size = 10
+rect_size = 20
 rect_number = 40
 edge = rect_size * rect_number
 
@@ -31,4 +31,4 @@ def rect_pos(x_y):
     return (rect_size * (x_y[0] // rect_size), rect_size * (x_y[1] // rect_size))
 
 def node_at_xy(x_y):
-    return graph[2][x_y[1] // 10][x_y[0] // 10]
+    return graph[2][x_y[1] // rect_size][x_y[0] // rect_size]

@@ -41,7 +41,7 @@ def events(mouse_pos):
                 path = bfs.bfs_path()
                 if path:
                     for i in path:
-                        s.s_path.append((s.graph[1][i][1] * 10, s.graph[1][i][0] * 10))
+                        s.s_path.append((s.graph[1][i][1] * s.rect_size, s.graph[1][i][0] * s.rect_size))
                     s.s_path = s.s_path[1:-1]
                 else:
                     print('No path')
@@ -58,7 +58,7 @@ def draw_finding():
     for i in s.paths:
         tmp = []
         for j in i:
-            tmp.append((s.graph[1][j][1] * 10, s.graph[1][j][0] * 10))
+            tmp.append((s.graph[1][j][1] * s.rect_size, s.graph[1][j][0] * s.rect_size))
 
         draw_lines()
 
@@ -66,7 +66,7 @@ def draw_finding():
         draw_start_end()
         draw_rect(s.TMP, tmp[1:-1])
         pygame.display.update()
-        time.sleep(0.01)
+        #time.sleep(0.005)
         draw_rect(s.WHITE, tmp[1:-1])
         pygame.display.update()
 

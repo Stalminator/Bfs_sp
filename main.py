@@ -5,7 +5,7 @@ pygame.init()
 
 while s.game:
     s.win.fill(s.WHITE)
-    s.clock.tick(120)
+    s.clock.tick(240)
     mouse_pos = pygame.mouse.get_pos()
     pf.mouse_buttons(mouse_pos)
 
