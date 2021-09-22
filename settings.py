@@ -27,3 +27,6 @@ GREEN = (0, 255, 0)
 
 def rect_pos(x_y):
     return (rect_size * (x_y[0] // rect_size), rect_size * (x_y[1] // rect_size))
+
+def node_at_xy(x_y):
+    return graph[2][x_y[1] // 10][x_y[0] // 10]

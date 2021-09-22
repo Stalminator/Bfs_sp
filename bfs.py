@@ -28,7 +28,7 @@ def create_graph():
 
 def bfs_path():
     queue = []
-    queue.append([s.graph[2][s.start[1] // 10][s.start[0] // 10]])
+    queue.append([s.node_at_xy(s.start)])
     explored = []
     while queue:
         tmp = queue.pop(0)
@@ -38,15 +38,15 @@ def bfs_path():
                 path = list(tmp)
                 path.append(i)
                 queue.append(path)
-                if i == s.graph[2][s.end[1] // 10][s.end[0] // 10]:
+                if i == s.node_at_xy(s.end):
                     return path
         explored.append(node)
 
 
 def graph_update():
     for i in s.black_rects:
-        if s.graph[2][i[1] // 10][i[0] // 10] in s.graph[0]:
-            del s.graph[0][s.graph[2][i[1] // 10][i[0] // 10]]
+        if s.node_at_xy(i) in s.graph[0]:
+            del s.graph[0][s.node_at_xy(i)]
         for j in s.graph[0].values():
-            if s.graph[2][i[1] // 10][i[0] // 10] in j:
-                j.remove(s.graph[2][i[1] // 10][i[0] // 10])
+            if s.node_at_xy(i) in j:
+                j.remove(s.node_at_xy(i))
