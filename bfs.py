@@ -1,7 +1,13 @@
+#breadth first search functions
+
 from collections import defaultdict
 import settings as s
 
 
+#main functions to create graph
+#   graph - stores information about connection between nodes
+#   nodes - helper list of list to store nodes as 2d array
+#   nodes_pos - dictionary which allows to obtain coordinates of specific node in 2d array
 def create_graph():
     counter = 1
     graph = defaultdict(list)
@@ -26,6 +32,7 @@ def create_graph():
     return graph, nodes_pos, nodes
 
 
+#calculating the shortest path
 def bfs_path():
     s.paths.clear()
     queue = []
@@ -44,7 +51,7 @@ def bfs_path():
                     return path
         explored.append(node)
 
-
+#update graph after add previously deleted nodes
 def graph_update():
     for i in s.black_rects:
         if s.node_at_xy(i) in s.graph[0]:

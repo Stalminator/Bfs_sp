@@ -1,19 +1,21 @@
-import time
+#functions which use pygame module
 
 import pygame, settings as s, bfs
 
-
+#drawing single rectangle
 def draw_rect(COLOR, rects_list):
     for i in rects_list:
         pygame.draw.rect(s.win, COLOR, (i[0] + 1, i[1] + 1, s.rect_size - 1, s.rect_size - 1))
 
 
+#drawing lines
 def draw_lines():
     for i in range(0, s.edge, s.rect_size):
         pygame.draw.line(s.win, s.BLACK, (0, i), (s.edge, i))
         pygame.draw.line(s.win, s.BLACK, (i, 0), (i, s.edge))
 
 
+#handling mouse buttons actions
 def mouse_buttons(mouse_pos):
     if pygame.mouse.get_pressed()[0]:
         if s.rect_pos(mouse_pos) not in s.black_rects:
@@ -24,6 +26,7 @@ def mouse_buttons(mouse_pos):
         s.graph = bfs.create_graph()
 
 
+#drawing start and end of the shortest path
 def draw_start_end():
     if s.start != (0, 1):
         pygame.draw.rect(s.win, s.RED, (s.start[0] + 1, s.start[1] + 1, s.rect_size - 1, s.rect_size - 1))
@@ -31,6 +34,7 @@ def draw_start_end():
         pygame.draw.rect(s.win, s.BLUE, (s.end[0] + 1, s.end[1] + 1, s.rect_size - 1, s.rect_size - 1))
 
 
+#handling keyboard events
 def events(mouse_pos):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -54,6 +58,7 @@ def events(mouse_pos):
             if event.key == pygame.K_s:
                 draw_finding()
 
+#drawing how to theshortest path is calculated
 def draw_finding():
     for i in s.paths:
         tmp = []
@@ -64,14 +69,14 @@ def draw_finding():
 
         draw_rect(s.BLACK, s.black_rects)
         draw_start_end()
-        draw_rect(s.TMP, tmp[1:-1])
+        draw_rect(s.GREY, tmp[1:-1])
         pygame.display.update()
         #time.sleep(0.005)
         draw_rect(s.WHITE, tmp[1:-1])
         pygame.display.update()
 
 
-
+#agragating all drawing functions
 def draw():
     draw_lines()
     draw_rect(s.GREEN, s.s_path)
