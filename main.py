@@ -3,6 +3,7 @@ import pygame_functions as pf, bfs, settings as s
 
 pygame.init()
 
+
 while s.game:
     s.win.fill(s.WHITE)
     s.clock.tick(240)
